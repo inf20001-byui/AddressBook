@@ -21,6 +21,7 @@ This application is written in C++ and was developed using Visual Studio Code.
 Visual Studio Code
 C/C++ for Visual Studio Code
 MinGW - Minimalist GNU for Windows (https://osdn.net/projects/mingw/)
+Git / GitHub
 
 # Useful Websites
 
@@ -33,7 +34,6 @@ MinGW - Minimalist GNU for Windows (https://osdn.net/projects/mingw/)
 # Future Work
 
 Things that I would like to to fix, improve, and add in the future:
-
 - Develop a granular search feature
 - Integrate into a web application for easy use
 - Store data in a database
