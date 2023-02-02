@@ -1,0 +1,6 @@
+.vscode
+venv
+testing
+base
+*.txt
+*.exe
