@@ -53,15 +53,12 @@ class contact {
         cin >> email;
         cout << "Enter the notes: " ;
         cin.ignore();
-        //cin >> notes;
         getline(cin, notes);
 
         cout << "\n";
-        //cout << "Contact created!";
-        //cout << endl;
     }
 
-    // displays the contact
+    // displays the contact to the screen
     void printContact()
     {
         cout << "First Name: " << firstName << endl;
@@ -98,31 +95,30 @@ contact cont; // contact object to reference the contact class
 void saveContact()
 {
     datahandler.open("addressbook.txt", ios::out|ios::app); // open the file in append mode
-    cont.createNewContact(); // create a new contact
+    cont.createNewContact(); // call to -> create a new contact
     string address = firstName + "," + lastName + "," + phoneNumber + "," + email + "," + notes + "\n";
-    datahandler.write(address.data(), address.size()); // write the contact to the file
+    datahandler.write(address.data(), address.size()); // writes the contact to the file
     cout << address << endl;
     datahandler.close(); // close the file
 
     cout << endl <<"Contact has been added to the Addressbook" << endl;
-    //cout << endl << "Enter your choice: ";
-    //getchar();
 }
 
 // display all entries in the address book
 void displayAll()
 {
    system("cls"); // clear the screen
+
    cout << "    Displaying all contacts" << endl;
    cout << "--------------------------------" << endl;
-   datahandler.open("addressbook.txt", ios::in); // open the file in read mode
+   datahandler.open("addressbook.txt", ios::in); // open the file in read-only mode
    vector<string> *g1; // create a vector of strings
     g1 = new vector<string>[200]; 
-    if (datahandler.is_open()) 
+    if (datahandler.is_open()) // check if the file is open
     {
         string str; // string to store the line entries
 
-        // read the file line by line
+        // read the file line by line and store the line in the vector
         while (getline(datahandler, str)){ 
            stringstream linestream(str);
            getline(linestream, firstName, ',');
@@ -148,19 +144,19 @@ void displayAll()
 // Update a contact in the Addressbook
 void editContact()
 {
-    string name;
-    bool exists = false;
-    string fileContent;
+    string name; // string to store the name of the contact
+    bool exists = false; // boolean to check if the contact exists
+    string fileContent; // string to store the file content
 
     cout << "Enter the first name of the contact you want to edit: ";
     cin >> name;
     
     datahandler.open("addressbook.txt", ios::in|ios::in); // open the file in read mode
-    if (datahandler.is_open()) 
+    if (datahandler.is_open()) // check if the file is open
     {
         string str; // string to store the line entries
 
-        // read the file line by line
+        // read the file line by line until the end of the file using commas as delimiters
         while (getline(datahandler, str))
         { 
            stringstream linestream(str);
@@ -170,7 +166,7 @@ void editContact()
            getline(linestream, email, ',');
            getline(linestream, notes, ',');  
     
-            if(name == firstName) // if the name entered matches the name of the contact
+            if(name == firstName) // if the name entered matches the name of a contact
             {
                 cont.printContact(); // print the contact
                 cout << "--------------------------------" << endl;
@@ -189,19 +185,19 @@ void editContact()
                 cout << "Contact has been updated in the Addressbook" << endl;
                 exists = true;
             }
-            else
+            else // if the name entered does not match the name of a contact
             {
                 fileContent += str + "\n"; // add the line to the fileContent string
             }
         }
     datahandler.close(); // close the file 
     }
-    if (exists == false)
+    if (exists == false) // if the contact does not exist
     {
         cout << endl << "Contact does not exist int the Addressbook" << endl;
         getchar();
     }
-    else
+    else // if the contact exists
     {
         ofstream outFile("addressbook.txt"); // open the file in write mode
         outFile << fileContent; // write the fileContent string to the file
@@ -224,7 +220,7 @@ void deleteContact()
     datahandler.seekg(0, ios::beg); // move the pointer to the beginning of the file
     
     string str; // string to store the line entries
-    while (getline(datahandler, str)) // read the file record by record
+    while (getline(datahandler, str)) // read the file record by record using commas as delimiters
         {
         stringstream linestream(str);
         getline(linestream, firstName, ',');
@@ -235,13 +231,13 @@ void deleteContact()
 
         if(name == cont.getName()) // if the name matches the name of the contact
         {
-            cont.printContact(); // print the contact
+            cont.printContact(); // print the contact and show that it has been deleted
             cout << "--------------------------------" << endl;
             cout << endl;
             cout << "Contact deleted from Addressbook!" << endl;
             exists = true;
         }
-        else
+        else // if the name does not match the name of the contact
         {
             // write the contact to the temporary file if it doesn't match the name entered
             string address = firstName + "," + lastName + "," + phoneNumber + "," + email + "," + notes + "\n";
@@ -270,9 +266,9 @@ void deleteContact()
 
 // Main processing section
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[]) 
 {
-    for(;;)
+    for(;;) // infinite loop to display the menu
     {
         int choice;
         cout << "Welcome to Chris' Addressbook" << endl;
@@ -308,12 +304,12 @@ int main(int argc, char *argv[])
                 break;
         }
 
-        int option;
+        int option; // variable to store the user's choice
         cout << "Do you want to continue? (1 = Yes, 2 = No): ";
         cin >> option;
         system("cls");
 
-        switch(option)
+        switch(option) // switch statement to continue or exit the program
         {
         case 1:
             continue;
